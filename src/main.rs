@@ -1,4 +1,4 @@
-te config;
+extern crate config;
 // Just used for rolling dice
 extern crate rand;
 
