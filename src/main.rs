@@ -1,3 +1,5 @@
+// This is not a hard dependency.
+// Just used for loading the username, password and homeserverurl from a file.
 extern crate config;
 // Just used for rolling dice
 extern crate rand;
@@ -14,7 +16,7 @@ fn main() {
     // load from botconfig.toml.
     // Change this file to your needs, if you want to use this example binary.
     let mut settings = config::Config::default();
-    settings.merge(config::File::with_name("examples/botconfig")).unwrap();
+    settings.merge(config::File::with_name("src/botconfig")).unwrap();
 
     let user = settings.get_str("user").unwrap();
     let password  = settings.get_str("password").unwrap();
