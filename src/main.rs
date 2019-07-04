@@ -122,9 +122,9 @@ fn headpat(bot: &MatrixBot, message: &Message, _cmd: &str) -> HandleResult {
 
 fn ripresp(bot: &MatrixBot, message: &Message, _cmd: &str) -> HandleResult {
     let mut random = rand::thread_rng();
-    let number = Uniform::from(0.0..1.0);
+    let number = Uniform::from(0.00..1.00);
     let resp = number.sample(&mut random);
-    if resp > 0.9 {
+    if resp > 0.75 {
         bot.send_message("リップ (´-ω-`)", &message.room, MessageType::TextMessage);
     }
     HandleResult::StopHandling
