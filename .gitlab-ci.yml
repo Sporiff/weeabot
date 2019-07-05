@@ -1,16 +1,11 @@
 image: 'rust:latest'
 
-variables:
-  BUILD_IMAGE: $CI_REGISTRY_IMAGE/build:$CI_COMMIT_REF_SLUG
-  DEPLOY_IMAGE: $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
-
 stages:
   - test
   - build
 
 test:
   stage: test
-  image: $BUILD_IMAGE
   tags: [gitlab-org]
   before_script:
     - rm -fr ~/.cargo/registry && mkdir -p /cache/registry && ln -s /cache/registry ~/.cargo/registry
@@ -23,7 +18,6 @@ test:
 
 build_binary:
   stage: build
-  image: $BUILD_IMAGE
   tags: [gitlab-org]
   only:
     - tags
