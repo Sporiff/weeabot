@@ -16,8 +16,6 @@ test:
 build_binary:
   stage: build
   tags: [gitlab-org]
-  only:
-    - tags
   before_script:
     - rustc --version
     - cargo --version
