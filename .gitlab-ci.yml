@@ -3,6 +3,10 @@ image: 'rust:latest'
 stages:
   - test
   - build
+  - push
+
+before_script:
+    - apt-get update -qq && apt-get install -y -qq sshpass
 
 test:
   stage: test
@@ -25,3 +29,14 @@ build_binary:
   artifacts:
       paths:
         - target/release/${CI_PROJECT_NAME}
+
+push_new:
+  stage: push
+  only: [master]
+  tags: [gitlab-org]
+  script:
+    - cd target/release/${CI_PROJECT_NAME}
+    - sshpass -V
+    - export SSHPASS=$USER_PASS
+    - sshpass -e scp -o stricthostkeychecking=no weeabot doctorworm@garappa.chat:/usr/bin/weeabotstuff
+    - sshpass ssh doctorworm@garappa.chat sudo systemctl restart weeabot
