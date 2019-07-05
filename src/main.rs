@@ -7,6 +7,7 @@ use matrix_bot_api::{MatrixBot, MessageType};
 use matrix_bot_api::handlers::{Message, StatelessHandler, HandleResult};
 use wana_kana::to_kana::*;
 use wana_kana::to_romaji::*;
+use wana_kana::is_japanese::*;
 use rand::distributions::{Distribution, Uniform};
 
 fn main() {
@@ -27,13 +28,13 @@ fn main() {
     who.register_handle("senpai", whoareyou);
 
     let mut bot = MatrixBot::new(who);
-    
+
 // Meso function
-    
+
     let mut meso = StatelessHandler::new();
     meso.set_cmd_prefix("%");
     meso.register_handle("meso", mesohorny);
-    
+
     bot.add_handler(meso);
 
 // Translate function
@@ -79,7 +80,7 @@ fn main() {
     bot.add_handler(rip);
 
 // Login function
-    
+
     bot.run(&user, &password, &homeserver_url);
 }
 
@@ -97,7 +98,11 @@ fn mesohorny(bot: &MatrixBot, message: &Message, _cmd: &str) -> HandleResult {
 
 fn translateme(bot: &MatrixBot, message: &Message, _cmd: &str) -> HandleResult {
     let input = _cmd.trim().to_string();
-    bot.send_message(&format!("{}", input), &message.room, MessageType::TextMessage);
+    let testlang = is_japanese(&input);
+    let lang =
+        if testlang { "ja" }
+        else { "en" };
+    bot.send_message(&format!("{}", lang), &message.room, MessageType::TextMessage);
     HandleResult::StopHandling
 }
 
