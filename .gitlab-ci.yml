@@ -15,6 +15,7 @@ test:
 
 build_binary:
   stage: build
+  only: [master]
   tags: [gitlab-org]
   before_script:
     - rustc --version
