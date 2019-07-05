@@ -1,3 +1,5 @@
+image: 'rust:latest'
+
 variables:
   BUILD_IMAGE: $CI_REGISTRY_IMAGE/build:$CI_COMMIT_REF_SLUG
   DEPLOY_IMAGE: $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
