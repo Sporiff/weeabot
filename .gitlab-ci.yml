@@ -8,11 +8,8 @@ test:
   stage: test
   tags: [gitlab-org]
   before_script:
-    - rm -fr ~/.cargo/registry && mkdir -p /cache/registry && ln -s /cache/registry ~/.cargo/registry
-    - rm -fr ~/.cargo/git && mkdir -p /cache/git && ln -s /cache/git ~/.cargo/git
-    - rm -fr target && mkdir -p /cache/$CI_COMMIT_REF_SLUG/target && ln -s /cache/$CI_COMMIT_REF_SLUG/target target
-    - source ~/.cargo/env
     - rustc --version
+    - cargo --version
   script:
     - RUSTFLAGS="-D warnings" CARGO_INCREMENTAL=1 RUST_BACKTRACE=1 cargo test -- --nocapture
 
@@ -22,12 +19,9 @@ build_binary:
   only:
     - tags
   before_script:
-    - source ~/.cargo/env
     - rustc --version
+    - cargo --version
   script:
-    - rm -fr ~/.cargo/registry && mkdir -p /cache/registry && ln -s /cache/registry ~/.cargo/registry
-    - rm -fr ~/.cargo/git && mkdir -p /cache/git && ln -s /cache/git ~/.cargo/git
-    - rm -fr target && mkdir -p /cache/$CI_COMMIT_REF_SLUG/target && ln -s /cache/$CI_COMMIT_REF_SLUG/target target
     - RUST_BACKTRACE=1 cargo build --release
   artifacts:
       paths:
