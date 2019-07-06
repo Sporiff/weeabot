@@ -38,5 +38,5 @@ push_new:
     - cd target/release/
     - sshpass -V
     - export SSHPASS=$USER_PASS
-    - sshpass -P 1694 -e scp -o stricthostkeychecking=no weeabot doctorworm@garappa.chat:/usr/bin/weeabotstuff
-    - sshpass -P 1694 ssh doctorworm@garappa.chat sudo systemctl restart weeabot
+    - sshpass -e scp -P 1694 -o stricthostkeychecking=no weeabot doctorworm@garappa.chat:/usr/bin/weeabotstuff
+    - sshpass ssh -P 1694 doctorworm@garappa.chat sudo systemctl restart weeabot
