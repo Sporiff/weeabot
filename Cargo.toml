@@ -10,3 +10,7 @@ fractal-matrix-api = "4.0.0"
 config = "0.9.3"
 wana_kana = "0.9.3"
 rand = "0.7.0"
+url = "1.7.1"
+reqwest = "0.9.18"
+serde = "1.0.94"
+ytr = { path = "ytr" }
