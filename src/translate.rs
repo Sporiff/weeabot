@@ -1,15 +1,36 @@
 extern crate matrix_bot_api;
+extern crate config;
+extern crate ytr;
 
 use matrix_bot_api::{MatrixBot, MessageType};
 use matrix_bot_api::handlers::{Message, HandleResult};
-use wana_kana::is_japanese::*;
 
 pub fn translateme(bot: &MatrixBot, message: &Message, _cmd: &str) -> HandleResult {
-    let input = _cmd.trim().to_string();
-    let testlang = is_japanese(&input);
-    let lang =
-        if testlang { "ja" }
-        else { "en" };
-    bot.send_message(&format!("{}", lang), &message.room, MessageType::TextMessage);
+
+    // Fetch the API key from a file in the src directory
+    let mut args = std::env::args();
+    args.next();
+
+    let mut conf = config::Config::default();
+    conf.merge(config::File::with_name("src/api")).unwrap();
+    let key = conf.get_str("key").unwrap();
+    let api = ytr::ApiClient::new(key);
+
+    // Check for the language being used and format the query string
+    let text = _cmd.trim().to_string();
+    let tolang = &text[..2];
+    let translatestring = &text[3..];
+    // Return the translated string
+    
+    let result = api.translate(&format!("{}", translatestring), &format!("{}", tolang))
+        .format("plain")
+        .get(); 
+
+    let translation = match result {
+        Ok(response) => response.text,
+        Err(error) => format!("An error has occurred: {:?}", error),
+    };
+
+    bot.send_message(&format!("{:?}", translation), &message.room, MessageType::TextMessage);
     HandleResult::StopHandling
 }
