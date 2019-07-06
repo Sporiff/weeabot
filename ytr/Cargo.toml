@@ -1,0 +1,21 @@
+[package]
+name = "ytr"
+version = "0.1.1"
+description = "Yandex.Translate API wrapper for Rust"
+license = "MIT"
+repository = "https://github.com/ilunev/ytr"
+readme = "README.md"
+authors = ["Ilya Lunev <ilunev@protonmail.com>"]
+keywords = ["translation", "yandex", "translate"]
+categories = ["api-bindings"]
+edition = "2018"
+
+[dependencies]
+url = "1.7.2"
+reqwest = "0.9.18"
+serde = "1.0.94"
+serde_derive = "1.0.94"
+serde_urlencoded = "0.5.5"
+
+[dev-dependencies]
+serde_json = "1.0.40"
