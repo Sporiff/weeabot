@@ -73,6 +73,12 @@ fn main() {
     rip.register_handle("rip", ripresp);
     rip.register_handle("rippu", ripresp);
     rip.register_handle("rup", ripresp);
+    rip.register_handle("fml", ripresp);
+    rip.register_handle("RIP", ripresp);
+    rip.register_handle("rop", ripresp);
+    rip.register_handle("rippo", ripresp);
+    rip.register_handle("FML", ripresp);
+
 
     bot.add_handler(rip);
 
