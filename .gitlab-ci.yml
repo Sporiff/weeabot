@@ -35,8 +35,8 @@ push_new:
   only: [master]
   tags: [gitlab-org]
   script:
-    - cd target/release/${CI_PROJECT_NAME}
+    - cd target/release/
     - sshpass -V
     - export SSHPASS=$USER_PASS
-    - sshpass -e scp -o stricthostkeychecking=no weeabot doctorworm@garappa.chat:/usr/bin/weeabotstuff
-    - sshpass ssh doctorworm@garappa.chat sudo systemctl restart weeabot
+    - sshpass -P 1694 -e scp -o stricthostkeychecking=no weeabot doctorworm@garappa.chat:/usr/bin/weeabotstuff
+    - sshpass -P 1694 ssh doctorworm@garappa.chat sudo systemctl restart weeabot
