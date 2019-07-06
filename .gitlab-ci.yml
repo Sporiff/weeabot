@@ -40,5 +40,7 @@ push_new:
     - sshpass -V
     - export SSHPASS=$USER_PASS
     - sshpass -e scp -P 1694 -o stricthostkeychecking=no weeabot doctorworm@garappa.chat:/home/doctorworm
+    - export SSHPASS=$USER_PASS
     - sshpass ssh doctorworm@garappa.chat -p 1694 sudo mv /home/doctorworm/weeabot /usr/bin/weeabotstuff
+    - export SSHPASS=$USER_PASS
     - sshpass ssh doctorworm@garappa.chat -p 1694 sudo systemctl restart weeabot
