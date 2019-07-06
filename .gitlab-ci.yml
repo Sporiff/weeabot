@@ -10,6 +10,7 @@ before_script:
 
 test:
   stage: test
+  only: [develop]
   tags: [gitlab-org]
   before_script:
     - rustc --version
@@ -39,5 +40,5 @@ push_new:
     - sshpass -V
     - export SSHPASS=$USER_PASS
     - sshpass -e scp -P 1694 -o stricthostkeychecking=no weeabot doctorworm@garappa.chat:/home/doctorworm
-    - sshpass ssh -P 1694 doctorworm@garappa.chat sudo cp /home/doctorworm/weeabot /usr/bin/weeabotstuff
+    - sshpass ssh -P 1694 doctorworm@garappa.chat sudo mv /home/doctorworm/weeabot /usr/bin/weeabotstuff
     - sshpass ssh -P 1694 doctorworm@garappa.chat sudo systemctl restart weeabot
