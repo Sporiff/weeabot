@@ -13,4 +13,6 @@ rand = "0.7.0"
 url = "1.7.1"
 reqwest = "0.9.18"
 serde = "1.0.94"
-ytr = { path = "ytr" }
+ytr = { git = "https://github.com/Sporiff/ytr" }
+scraper = "0.10.0"
+select = "0.4.2"
