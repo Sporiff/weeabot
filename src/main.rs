@@ -20,7 +20,7 @@ fn main() {
 // Get settings from Toml file
 
     let mut settings = config::Config::default();
-    settings.merge(config::File::with_name("src/botconfig")).unwrap();
+    settings.merge(config::File::with_name("botconfig")).unwrap();
 
     let user = settings.get_str("user").unwrap();
     let password  = settings.get_str("password").unwrap();
