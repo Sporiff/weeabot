@@ -31,6 +31,8 @@ pub fn translateme(bot: &MatrixBot, message: &Message, _cmd: &str) -> HandleResu
         Err(error) => format!("An error has occurred: {:?}", error),
     };
 
-    bot.send_message(&format!("{:?}", translation), &message.room, MessageType::TextMessage);
+    let translation_esc = translation.replace("\\'", "'");
+
+    bot.send_message(&format!("{}", translation_esc), &message.room, MessageType::TextMessage);
     HandleResult::StopHandling
 }
