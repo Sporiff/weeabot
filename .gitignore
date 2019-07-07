@@ -1,6 +1,6 @@
-src/botconfig.toml
+botconfig.toml
 Cargo.lock
-src/api.toml
+api.toml
 
 
 #Added by cargo

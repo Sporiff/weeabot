@@ -12,7 +12,7 @@ pub fn translateme(bot: &MatrixBot, message: &Message, _cmd: &str) -> HandleResu
     args.next();
 
     let mut conf = config::Config::default();
-    conf.merge(config::File::with_name("src/api")).unwrap();
+    conf.merge(config::File::with_name("api")).unwrap();
     let key = conf.get_str("key").unwrap();
     let api = ytr::ApiClient::new(key);
 
