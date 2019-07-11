@@ -6,6 +6,7 @@ mod pat;
 mod romakana;
 mod notice;
 mod translate;
+mod dab;
 
 use matrix_bot_api::MatrixBot;
 use matrix_bot_api::handlers::StatelessHandler;
@@ -14,6 +15,7 @@ use pat::headpat;
 use romakana::{kanaconvert, romaconvert};
 use notice::noticeme;
 use translate::translateme;
+use dab::senddab;
 
 fn main() {
 
@@ -33,6 +35,14 @@ fn main() {
     notice.register_handle("senpai", noticeme);
 
     let mut bot = MatrixBot::new(notice);
+
+// Dab function
+
+    let mut dab = StatelessHandler::new();
+    dab.set_cmd_prefix("");
+    dab.register_handle("dab", senddab);
+
+    bot.add_handler(dab);
 
 // Translate function
 
