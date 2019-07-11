@@ -12,8 +12,8 @@ pub fn translateme(bot: &MatrixBot, message: &Message, _cmd: &str) -> HandleResu
     args.next();
 
     let mut conf = config::Config::default();
-    conf.merge(config::File::with_name("api")).unwrap();
-    let key = conf.get_str("key").unwrap();
+    conf.merge(config::File::with_name("botconfig")).unwrap();
+    let key = conf.get_str("translate").unwrap();
     let api = ytr::ApiClient::new(key);
 
     // Check for the language being used and format the query string
