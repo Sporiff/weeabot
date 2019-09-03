@@ -9,4 +9,5 @@ matrix_bot_api = "0.4.0"
 config = "0.9.3"
 wana_kana = "0.9.3"
 rand = "0.7.0"
-ytr = { git = "https://github.com/Sporiff/ytr" }
+ytr = "0.1.2"
+tmdb = "2.0.0"
