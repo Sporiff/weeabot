@@ -1,12 +1,13 @@
 [package]
 name = "weeabot"
-version = "0.2.0"
+version = "0.3.0"
 authors = ["Ciaran Ainsworth <ciaranainsworth@posteo.net>"]
 edition = "2018"
 
 [dependencies]
-matrix_bot_api = "0.4.0"
+matrix_bot_api = { git = "https://github.com/Sporiff/matrix_bot_api/" }
 config = "0.9.3"
 wana_kana = "0.9.3"
 rand = "0.7.0"
-ytr = { git = "https://github.com/Sporiff/ytr" }
+ytr = "0.1.2"
+chrono = "0.4.8"
