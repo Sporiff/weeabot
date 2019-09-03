@@ -1,8 +1,5 @@
 image: 'rust:latest'
 
-include:
-  template: Dependency-Scanning.gitlab-ci.yml
-
 stages:
   - test
   - build
