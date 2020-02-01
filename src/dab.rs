@@ -5,9 +5,16 @@ extern crate config;
 use matrix_bot_api::{MatrixBot, MessageType};
 use matrix_bot_api::handlers::{Message, HandleResult};
 use rand::distributions::{Distribution, Uniform};
+use rand::seq::SliceRandom;
 
 pub fn senddab(bot: &MatrixBot, message: &Message, _cmd: &str) -> HandleResult {
 
+    let array = [
+        "ヽ(o⌣oヾ)",
+        "ヽ( •_)ᕗ",
+        "／ʕ •ᴥ•ʔ／"
+    ];
+    let mut rng = rand::thread_rng();
     let mut settings = config::Config::default();
     settings.merge(config::File::with_name("botconfig")).unwrap();
 
@@ -17,7 +24,7 @@ pub fn senddab(bot: &MatrixBot, message: &Message, _cmd: &str) -> HandleResult {
     let number = Uniform::from(0.00..1.00);
     let resp = number.sample(&mut random);
     if resp > limit {
-        bot.send_message("／ʕ •ᴥ•ʔ／", &message.room, MessageType::TextMessage);
+        bot.send_message(&format!("{}", array.choose(&mut rng).unwrap()), &message.room, MessageType::TextMessage);
     }
     HandleResult::StopHandling
 }
