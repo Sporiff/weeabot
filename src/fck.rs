@@ -3,10 +3,10 @@ extern crate config;
 
 use rand::distributions::{Distribution, Uniform};
 use rand::seq::SliceRandom;
-use matrix_bot_api::{MatrixBot, MessageType};
+use matrix_bot_api::{ActiveBot, MessageType};
 use matrix_bot_api::handlers::{Message, HandleResult};
 
-pub fn fckresp(bot: &MatrixBot, message: &Message, _cmd: &str) -> HandleResult {
+pub fn fckresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
 
     let array = [
         "(ﾉಥ益ಥ)ﾉ",
