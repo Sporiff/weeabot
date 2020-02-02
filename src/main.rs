@@ -7,10 +7,12 @@ mod romakana;
 mod notice;
 mod translate;
 mod dab;
+mod fck;
 
 use matrix_bot_api::MatrixBot;
 use matrix_bot_api::handlers::StatelessHandler;
 use rip::ripresp;
+use fck::fckresp;
 use pat::headpat;
 use romakana::{kanaconvert, romaconvert};
 use notice::noticeme;
@@ -91,6 +93,17 @@ fn main() {
 
 
     bot.add_handler(rip);
+
+// Fck function
+
+    let mut fck = StatelessHandler::new();
+    fck.set_cmd_prefix("");
+    fck.register_handle("fuck", fckresp);
+    fck.register_handle("fck", fckresp);
+    fck.register_handle("Fuck", fckresp);
+    fck.register_handle("FUCK", fckresp);
+
+    bot.add_handler(fck);
 
 // Login function
 
