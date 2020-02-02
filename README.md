@@ -11,11 +11,11 @@ and fun reactions to various triggers set up in the
 
 ## Triggers
 
-`%senpai` - Triggers a "Notice me senpai" message
-`%headpat` - Triggers a "Nyan nyan" message
-`%kana <string>` - Converts given string into Japanese kana
-`%roma <string>` - Converts given string into roman characters
-`%translate <language code> <string>` - Translates given
+* `%senpai` - Triggers a "Notice me senpai" message
+* `%headpat` - Triggers a "Nyan nyan" message
+* `%kana <string>` - Converts given string into Japanese kana
+* `%roma <string>` - Converts given string into roman characters
+* `%translate <language code> <string>` - Translates given
 string into the language given in the language code. e.g.:
 
 ```
@@ -27,9 +27,9 @@ bonjour
 The bot also responds to the following words at a frequency
 determined in the `BotConfig.toml` file:
 
-`dab` - Responds with a dabbing kaomoji
-`rip` - Responds with a sad "RIP" message
-`fuck` - Responds with an angry "Fuck" message
+* `dab` - Responds with a dabbing kaomoji
+* `rip` - Responds with a sad "RIP" message
+* `fuck` - Responds with an angry "Fuck" message
 
 This bot makes use of the
 [matrix_bot_api crate](https://docs.rs/matrix_bot_api/0.4.0/matrix_bot_api/)
