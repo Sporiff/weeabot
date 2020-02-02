@@ -2,12 +2,12 @@ extern crate matrix_bot_api;
 extern crate rand;
 extern crate config;
 
-use matrix_bot_api::{MatrixBot, MessageType};
+use matrix_bot_api::{ActiveBot, MessageType};
 use matrix_bot_api::handlers::{Message, HandleResult};
 use rand::distributions::{Distribution, Uniform};
 use rand::seq::SliceRandom;
 
-pub fn senddab(bot: &MatrixBot, message: &Message, _cmd: &str) -> HandleResult {
+pub fn senddab(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
 
     let array = [
         "ヽ(o⌣oヾ)",

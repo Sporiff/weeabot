@@ -5,9 +5,9 @@ authors = ["Ciarán Ainsworth <ciaranainsworth@posteo.net>"]
 edition = "2018"
 
 [dependencies]
-matrix_bot_api = { git = "https://github.com/Sporiff/matrix_bot_api/" }
-config = "^0.9.3"
-wana_kana = "^0.9.3"
-rand = "^0.7.0"
-ytr = "^0.1.2"
-chrono = "^0.4.8"
+matrix_bot_api = { git = "https://github.com/zwieberl/matrix_bot_api" }
+config = "0.10.1"
+wana_kana = "2.0.1"
+rand = "0.7.3"
+ytr = "0.1.2"
+chrono = "0.4.10"

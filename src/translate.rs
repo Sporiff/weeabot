@@ -2,10 +2,10 @@ extern crate matrix_bot_api;
 extern crate config;
 extern crate ytr;
 
-use matrix_bot_api::{MatrixBot, MessageType};
+use matrix_bot_api::{ActiveBot, MessageType};
 use matrix_bot_api::handlers::{Message, HandleResult};
 
-pub fn translateme(bot: &MatrixBot, message: &Message, _cmd: &str) -> HandleResult {
+pub fn translateme(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
 
     // Fetch the API key from a file in the src directory
     let mut args = std::env::args();
@@ -21,10 +21,10 @@ pub fn translateme(bot: &MatrixBot, message: &Message, _cmd: &str) -> HandleResu
     let tolang = &text[..2];
     let translatestring = &text[3..];
     // Return the translated string
-    
+
     let result = api.translate(&format!("{}", translatestring), &format!("{}", tolang))
         .format("plain")
-        .get(); 
+        .get();
 
     let translation = match result {
         Ok(response) => response.text,

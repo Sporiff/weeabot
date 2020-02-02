@@ -1,12 +1,12 @@
 extern crate matrix_bot_api;
 extern crate rand;
 
-use matrix_bot_api::{MatrixBot, MessageType};
+use matrix_bot_api::{ActiveBot, MessageType};
 use matrix_bot_api::handlers::{Message, HandleResult};
 use rand::seq::SliceRandom;
 
 
-pub fn headpat(bot: &MatrixBot, message: &Message, _cmd: &str) -> HandleResult {
+pub fn headpat(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
     let array = [
         "(*≧ω≦*)",
         "(≧◡≦)",
