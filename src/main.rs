@@ -8,11 +8,13 @@ mod notice;
 mod translate;
 mod dab;
 mod fck;
+mod fw;
 
 use matrix_bot_api::MatrixBot;
 use matrix_bot_api::handlers::StatelessHandler;
 use rip::ripresp;
 use fck::fckresp;
+use fw::{artresp, trackresp, albresp};
 use pat::headpat;
 use romakana::{kanaconvert, romaconvert};
 use notice::noticeme;
@@ -104,6 +106,18 @@ fn main() {
     fck.register_handle("FUCK", fckresp);
 
     bot.add_handler(fck);
+
+// Track function
+
+// Funkwhale function
+
+    let mut fw = StatelessHandler::new();
+    fw.set_cmd_prefix("%");
+    fw.register_handle("artist", artresp);
+    fw.register_handle("album", albresp);
+    fw.register_handle("track", trackresp);
+
+    bot.add_handler(fw);
 
 // Login function
 
