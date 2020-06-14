@@ -23,7 +23,6 @@ struct ID {
 #[tokio::main]
 async fn geturl(url: &str) -> Result<Output, Error>{
     let request_url = format!("{}", url);
-    println!("{:?}", request_url);
     let response: Output = reqwest::get(&request_url).await?.json().await?;
     Ok(response)
 }
@@ -35,7 +34,6 @@ pub fn trackresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult
     let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string();
     let request_url = &format!("https://tanukitunes.com/api/v1/tracks/?q={}&ordering=id&page=1&page_size=1", string.trim());
     let results = geturl(request_url).unwrap();
-    println!("{:?}", results);
     let count = results.count;
     if count == 0 {
         bot.send_message(&format!("{}", APOLOGY), &message.room, MessageType::TextMessage);
@@ -52,7 +50,6 @@ pub fn albresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
     let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string();
     let request_url = &format!("https://tanukitunes.com/api/v1/albums/?q={}&ordering=id&page=1&page_size=1", string.trim());
     let results = geturl(request_url).unwrap();
-    println!("{:?}", results);
     let count = results.count;
     if count == 0 {
         bot.send_message(&format!("{}", APOLOGY), &message.room, MessageType::TextMessage);
@@ -69,7 +66,6 @@ pub fn artresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
     let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string();
     let request_url = &format!("https://tanukitunes.com/api/v1/artists/?q={}&ordering=id&page=1&page_size=1", string.trim());
     let results = geturl(request_url).unwrap();
-    println!("{:?}", results);
     let count = results.count;
     if count == 0 {
         bot.send_message(&format!("{}", APOLOGY), &message.room, MessageType::TextMessage);
