@@ -32,7 +32,7 @@ const APOLOGY: &str = "I'm sorry, senpai. I can't find it (╥﹏╥)";
 
 pub fn trackresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
     let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string();
-    let request_url = &format!("https://tanukitunes.com/api/v1/tracks/?q={}&ordering=id&page=1&page_size=1", string.trim());
+    let request_url = &format!("https://tanukitunes.com/api/v1/tracks/?q={}&ordering=title&page=1&page_size=1", string.trim());
     let results = geturl(request_url).unwrap();
     let count = results.count;
     if count == 0 {
@@ -48,7 +48,7 @@ pub fn trackresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult
 
 pub fn albresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
     let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string();
-    let request_url = &format!("https://tanukitunes.com/api/v1/albums/?q={}&ordering=id&page=1&page_size=1", string.trim());
+    let request_url = &format!("https://tanukitunes.com/api/v1/albums/?q={}&ordering=title&page=1&page_size=1", string.trim());
     let results = geturl(request_url).unwrap();
     let count = results.count;
     if count == 0 {
