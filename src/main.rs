@@ -14,7 +14,7 @@ use matrix_bot_api::MatrixBot;
 use matrix_bot_api::handlers::StatelessHandler;
 use rip::ripresp;
 use fck::fckresp;
-use fw::{artresp, trackresp, albresp};
+use fw::{artresp, trackresp, albresp, playresp};
 use pat::headpat;
 use romakana::{kanaconvert, romaconvert};
 use notice::noticeme;
@@ -116,6 +116,7 @@ fn main() {
     fw.register_handle("artist", artresp);
     fw.register_handle("album", albresp);
     fw.register_handle("track", trackresp);
+    fw.register_handle("playlist", playresp);
 
     bot.add_handler(fw);
 

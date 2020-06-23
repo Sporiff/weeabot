@@ -77,3 +77,19 @@ pub fn artresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
     }
     HandleResult::StopHandling
 }
+
+pub fn playresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
+    let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string();
+    let request_url = &format!("https://tanukitunes.com/api/v1/playlists/?q={}&ordering=id&page=1&page_size=1", string.trim());
+    let results = geturl(request_url).unwrap();
+    let count = results.count;
+    if count == 0 {
+        bot.send_message(&format!("{}", APOLOGY), &message.room, MessageType::TextMessage);
+    }
+    else {
+        let final_id = results.results[0].id;
+        let post_url = &format!("https://tanukitunes.com/library/playlists/{}", final_id);
+        bot.send_message(&format!("{}", post_url), &message.room, MessageType::TextMessage);
+    }
+    HandleResult::StopHandling
+}
