@@ -50,13 +50,14 @@ fn find_track_by_title(results: &Vec<ID>, title: String) -> u32 {
 }
 
 pub fn trackresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
+    let query = _cmd.trim().to_string();
     let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string();
     let results = track(&string);
 
     match results {
         None => bot.send_message(&format!("{}", APOLOGY), &message.room, MessageType::TextMessage),
         Some(result) => {
-            let final_id = find_track_by_title(&result.results, string);
+            let final_id = find_track_by_title(&result.results, query);
             let post_url = &format!("https://tanukitunes.com/library/tracks/{}", final_id);
             bot.send_message(&format!("{}", post_url), &message.room, MessageType::TextMessage);
         },
