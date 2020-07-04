@@ -24,6 +24,14 @@ string into the language given in the language code. e.g.:
 bonjour
 ```
 
+* `%track <string>`/`%album <string>`/`artist <string>` - performs a search for tracks/albums/artist on a Funkwhale instance dictated by the `funkwhale_url` value in `botconfig.toml` e.g.:
+
+```
+%album Styla
+
+https://open.audio/library/albums/12060/
+```
+
 The bot also responds to the following words at a frequency
 determined in the `BotConfig.toml` file:
 
@@ -32,4 +40,4 @@ determined in the `BotConfig.toml` file:
 * `fuck` - Responds with an angry "Fuck" message
 
 This bot makes use of the
-[matrix_bot_api crate](https://docs.rs/matrix_bot_api/0.4.0/matrix_bot_api/)
+[`matrix_bot_api crate`](https://docs.rs/matrix_bot_api/0.4.0/matrix_bot_api/)
