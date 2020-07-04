@@ -7,6 +7,10 @@ use matrix_bot_api::{ActiveBot, MessageType};
 use matrix_bot_api::handlers::{Message, HandleResult};
 use crate::botconf::Settings;
 
+pub const MODALS: &'static [&str] = &[
+    "rip", "rippo", "rippu", "rup", "RIP", "Rip", "rop",
+];
+
 pub fn ripresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
 
     let array = [

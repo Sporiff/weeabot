@@ -79,15 +79,9 @@ fn main() {
 
     let mut rip = StatelessHandler::new();
     rip.set_cmd_prefix("");
-    rip.register_handle("rip", ripresp);
-    rip.register_handle("rippu", ripresp);
-    rip.register_handle("rup", ripresp);
-    rip.register_handle("fml", ripresp);
-    rip.register_handle("RIP", ripresp);
-    rip.register_handle("rop", ripresp);
-    rip.register_handle("rippo", ripresp);
-    rip.register_handle("FML", ripresp);
-
+    for modal in rip::MODALS {
+        rip.register_handle(modal, ripresp);
+    }
 
     bot.add_handler(rip);
 
@@ -95,14 +89,11 @@ fn main() {
 
     let mut fck = StatelessHandler::new();
     fck.set_cmd_prefix("");
-    fck.register_handle("fuck", fckresp);
-    fck.register_handle("fck", fckresp);
-    fck.register_handle("Fuck", fckresp);
-    fck.register_handle("FUCK", fckresp);
+    for modal in fck::MODALS {
+        fck.register_handle(modal, fckresp);
+    }
 
     bot.add_handler(fck);
-
-// Track function
 
 // Funkwhale function
 
@@ -126,7 +117,6 @@ fn main() {
     bot.add_handler(choices);
 
 // Login function
-
 
     let config = Settings::get_settings();
     let user = config.user;

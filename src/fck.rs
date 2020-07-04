@@ -7,6 +7,10 @@ use matrix_bot_api::{ActiveBot, MessageType};
 use matrix_bot_api::handlers::{Message, HandleResult};
 use crate::botconf::Settings;
 
+pub const MODALS: &'static [&str] = &[
+    "fuck", "FUCK", "fck", "fug", "feck", "fml", "FML"
+];
+
 pub fn fckresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
 
     let array = [
