@@ -18,7 +18,10 @@ struct Output {
 #[derive(Deserialize, Debug)]
 struct ID {
     id: u32,
+    #[serde(default)]
     title: String,
+    #[serde(default)]
+    name: String,
 }
 
 #[tokio::main]
@@ -42,16 +45,53 @@ fn track(string: &String) -> Option<Output> {
     Some(result)
 }
 
+fn album(string: &String) -> Option<Output> {
+    let request_url = &format!("https://tanukitunes.com/api/v1/albums/?q={}&ordering=title", string.trim());
+
+    let result = geturl(request_url).unwrap();
+    if result.count == 0 {
+        return None;
+    }
+
+    Some(result)
+}
+
+fn artist(string: &String) -> Option<Output> {
+    let request_url = &format!("https://tanukitunes.com/api/v1/artists/?q={}&ordering=name", string.trim());
+
+    let result = geturl(request_url).unwrap();
+    if result.count == 0 {
+        return None;
+    }
+
+    Some(result)
+}
+
 fn find_track_by_title(results: &Vec<ID>, title: String) -> u32 {
-    match results.iter().find(|&t| t.title == title) {
+    match results.iter().find(|&t| t.title.to_lowercase() == title.to_lowercase()) {
         None => results[0].id,
         Some(exact) => exact.id,
     }
 }
 
+fn find_album_by_title(results: &Vec<ID>, title: String) -> u32 {
+    match results.iter().find(|&t| t.title.to_lowercase() == title.to_lowercase()) {
+        None => results[0].id,
+        Some(exact) => exact.id,
+    }
+}
+
+fn find_artist_by_name(results: &Vec<ID>, name: String) -> u32 {
+    match results.iter().find(|&t| t.name.to_lowercase() == name.to_lowercase()) {
+        None => results[0].id,
+        Some(exact) => exact.id,
+    }
+}
+
+
 pub fn trackresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
-    let query = _cmd.trim().to_string();
-    let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string();
+    let query = _cmd.trim().to_string().to_lowercase();
+    let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string().to_lowercase();
     let results = track(&string);
 
     match results {
@@ -67,50 +107,36 @@ pub fn trackresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult
 }
 
 pub fn albresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
-    let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string();
-    let request_url = &format!("https://tanukitunes.com/api/v1/albums/?q={}&ordering=title&page=1&page_size=1", string.trim());
-    let results = geturl(request_url).unwrap();
-    let count = results.count;
-    if count == 0 {
-        bot.send_message(&format!("{}", APOLOGY), &message.room, MessageType::TextMessage);
+    let query = _cmd.trim().to_string().to_lowercase();
+    let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string().to_lowercase();
+    let results = album(&string);
+
+    match results {
+        None => bot.send_message(&format!("{}", APOLOGY), &message.room, MessageType::TextMessage),
+        Some(result) => {
+            let final_id = find_album_by_title(&result.results, query);
+            let post_url = &format!("https://tanukitunes.com/library/albums/{}", final_id);
+            bot.send_message(&format!("{}", post_url), &message.room, MessageType::TextMessage);
+        },
     }
-    else {
-        let final_id = results.results[0].id;
-        let post_url = &format!("https://tanukitunes.com/library/albums/{}", final_id);
-        bot.send_message(&format!("{}", post_url), &message.room, MessageType::TextMessage);
-    }
+
     HandleResult::StopHandling
 }
 
 pub fn artresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
-    let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string();
-    let request_url = &format!("https://tanukitunes.com/api/v1/artists/?q={}&ordering=id&page=1&page_size=1", string.trim());
-    let results = geturl(request_url).unwrap();
-    let count = results.count;
-    if count == 0 {
-        bot.send_message(&format!("{}", APOLOGY), &message.room, MessageType::TextMessage);
-    }
-    else {
-        let final_id = results.results[0].id;
-        let post_url = &format!("https://tanukitunes.com/library/artists/{}", final_id);
-        bot.send_message(&format!("{}", post_url), &message.room, MessageType::TextMessage);
-    }
-    HandleResult::StopHandling
-}
+    let query = _cmd.trim().to_string().to_lowercase();
+    let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string().to_lowercase();
+    let results = artist(&string);
 
-pub fn playresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
-    let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string();
-    let request_url = &format!("https://tanukitunes.com/api/v1/playlists/?q={}&ordering=id&page=1&page_size=1", string.trim());
-    let results = geturl(request_url).unwrap();
-    let count = results.count;
-    if count == 0 {
-        bot.send_message(&format!("{}", APOLOGY), &message.room, MessageType::TextMessage);
+    match results {
+        None => bot.send_message(&format!("{}", APOLOGY), &message.room, MessageType::TextMessage),
+        Some(result) => {
+            let final_id = find_artist_by_name(&result.results, query);
+            let post_url = &format!("https://tanukitunes.com/library/artists/{}", final_id);
+            bot.send_message(&format!("{}", post_url), &message.room, MessageType::TextMessage);
+        },
     }
-    else {
-        let final_id = results.results[0].id;
-        let post_url = &format!("https://tanukitunes.com/library/playlists/{}", final_id);
-        bot.send_message(&format!("{}", post_url), &message.room, MessageType::TextMessage);
-    }
+
     HandleResult::StopHandling
 }
 
@@ -130,5 +156,35 @@ mod tests {
         assert_eq!(track_id(String::from("Ecos Jerezanos")), 48045);
         // incorrect match from prod
         assert_eq!(track_id(String::from("Dry Dry Try")), 42143);
+    }
+
+    use super::{album, find_album_by_title};
+
+    fn album_id(title: String) -> u32 {
+        find_album_by_title(&album(&title).unwrap().results, title)
+    }
+
+    #[test]
+    fn test_album() {
+        //multiple results
+        assert_eq!(album_id(String::from("Sleeping in Traffic")), 5583);
+        // single result
+        assert_eq!(album_id(String::from("Alpen-Echo")), 7662);
+        //incorrect match from prod
+        assert_eq!(album_id(String::from("Poni Hoax")), 8123);
+    }
+
+    use super::{artist, find_artist_by_name};
+
+    fn artist_id(name: String) -> u32 {
+        find_artist_by_name(&artist(&name).unwrap().results, name)
+    }
+
+    #[test]
+    fn test_artist() {
+        // single result
+        assert_eq!(artist_id(String::from("Franzl Lang")), 8557);
+        //incorrect match from prod
+        assert_eq!(artist_id(String::from("Sparks")), 6558);
     }
 }
