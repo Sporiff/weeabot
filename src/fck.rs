@@ -5,6 +5,7 @@ use rand::distributions::{Distribution, Uniform};
 use rand::seq::SliceRandom;
 use matrix_bot_api::{ActiveBot, MessageType};
 use matrix_bot_api::handlers::{Message, HandleResult};
+use crate::botconf::Settings;
 
 pub fn fckresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
 
@@ -19,9 +20,7 @@ pub fn fckresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
         "凸(￣ヘ￣)"
     ];
     let mut rng = rand::thread_rng();
-    let mut settings = config::Config::default();
-    settings.merge(config::File::with_name("botconfig")).unwrap();
-    let get = settings.get_str("fck").unwrap();
+    let get = Settings::get_settings().fck;
     let limit = get.parse().unwrap();
     let mut random = rand::thread_rng();
     let number = Uniform::from(0.00..1.00);

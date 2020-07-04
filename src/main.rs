@@ -9,6 +9,7 @@ mod translate;
 mod dab;
 mod fck;
 mod fw;
+mod botconf;
 
 use matrix_bot_api::MatrixBot;
 use matrix_bot_api::handlers::StatelessHandler;
@@ -20,17 +21,9 @@ use romakana::{kanaconvert, romaconvert};
 use notice::noticeme;
 use translate::translateme;
 use dab::senddab;
+use botconf::Settings;
 
 fn main() {
-
-// Get settings from Toml file
-
-    let mut settings = config::Config::default();
-    settings.merge(config::File::with_name("botconfig")).unwrap();
-
-    let user = settings.get_str("user").unwrap();
-    let password  = settings.get_str("password").unwrap();
-    let homeserver_url = settings.get_str("homeserver_url").unwrap();
 
 // Senpai function
 
@@ -120,6 +113,12 @@ fn main() {
     bot.add_handler(fw);
 
 // Login function
+
+
+    let config = Settings::get_settings();
+    let user = config.user;
+    let password = config.password;
+    let homeserver_url = config.homeserver_url;
 
     bot.run(&user, &password, &homeserver_url);
 }

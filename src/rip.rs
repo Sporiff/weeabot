@@ -5,6 +5,7 @@ use rand::distributions::{Distribution, Uniform};
 use rand::seq::SliceRandom;
 use matrix_bot_api::{ActiveBot, MessageType};
 use matrix_bot_api::handlers::{Message, HandleResult};
+use crate::botconf::Settings;
 
 pub fn ripresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
 
@@ -22,10 +23,7 @@ pub fn ripresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
         ".･ﾟﾟ･(／ω＼)･ﾟﾟ･."
     ];
     let mut rng = rand::thread_rng();
-    let mut settings = config::Config::default();
-    settings.merge(config::File::with_name("botconfig")).unwrap();
-
-    let get = settings.get_str("rip").unwrap();
+    let get = Settings::get_settings().rip;
     let limit = get.parse().unwrap();
     let mut random = rand::thread_rng();
     let number = Uniform::from(0.00..1.00);

@@ -8,6 +8,7 @@ use matrix_bot_api::handlers::{Message, HandleResult};
 use percent_encoding::{utf8_percent_encode, AsciiSet, CONTROLS};
 use serde::Deserialize;
 use reqwest::Error;
+use crate::botconf::Settings;
 
 #[derive(Deserialize, Debug)]
 struct Output {
@@ -36,7 +37,7 @@ const APOLOGY: &str = "I'm sorry, senpai. I can't find it (╥﹏╥)";
 const BLANK: &str = "Silly senpai. I need something to search for ┐('～`;)┌";
 
 fn track(string: &String) -> Option<Output> {
-    let request_url = &format!("https://tanukitunes.com/api/v1/tracks/?q={}&ordering=title", string.trim());
+    let request_url = &format!("{}/api/v1/tracks/?q={}&ordering=title", Settings::get_settings().funkwhale_url, string.trim());
 
     let result = geturl(request_url).unwrap();
     if result.count == 0 {
@@ -47,7 +48,7 @@ fn track(string: &String) -> Option<Output> {
 }
 
 fn album(string: &String) -> Option<Output> {
-    let request_url = &format!("https://tanukitunes.com/api/v1/albums/?q={}&ordering=title", string.trim());
+    let request_url = &format!("{}/api/v1/albums/?q={}&ordering=title", Settings::get_settings().funkwhale_url, string.trim());
 
     let result = geturl(request_url).unwrap();
     if result.count == 0 {
@@ -58,7 +59,7 @@ fn album(string: &String) -> Option<Output> {
 }
 
 fn artist(string: &String) -> Option<Output> {
-    let request_url = &format!("https://tanukitunes.com/api/v1/artists/?q={}&ordering=name", string.trim());
+    let request_url = &format!("{}/api/v1/artists/?q={}&ordering=name", Settings::get_settings().funkwhale_url, string.trim());
 
     let result = geturl(request_url).unwrap();
     if result.count == 0 {
@@ -105,7 +106,7 @@ pub fn trackresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult
             None => bot.send_message(&format!("{}", APOLOGY), &message.room, MessageType::TextMessage),
             Some(result) => {
                 let final_id = find_track_by_title(&result.results, query);
-                let post_url = &format!("https://tanukitunes.com/library/tracks/{}", final_id);
+                let post_url = &format!("{}/library/tracks/{}", Settings::get_settings().funkwhale_url, final_id);
                 bot.send_message(&format!("{}", post_url), &message.room, MessageType::TextMessage);
             },
         }
@@ -128,7 +129,7 @@ pub fn albresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
             None => bot.send_message(&format!("{}", APOLOGY), &message.room, MessageType::TextMessage),
             Some(result) => {
                 let final_id = find_album_by_title(&result.results, query);
-                let post_url = &format!("https://tanukitunes.com/library/albums/{}", final_id);
+                let post_url = &format!("{}/library/albums/{}", Settings::get_settings().funkwhale_url, final_id);
                 bot.send_message(&format!("{}", post_url), &message.room, MessageType::TextMessage);
             },
         }
@@ -151,7 +152,7 @@ pub fn artresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
             None => bot.send_message(&format!("{}", APOLOGY), &message.room, MessageType::TextMessage),
             Some(result) => {
                 let final_id = find_artist_by_name(&result.results, query);
-                let post_url = &format!("https://tanukitunes.com/library/artists/{}", final_id);
+                let post_url = &format!("{}/library/artists/{}", Settings::get_settings().funkwhale_url, final_id);
                 bot.send_message(&format!("{}", post_url), &message.room, MessageType::TextMessage);
             },
         }

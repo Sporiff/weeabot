@@ -6,6 +6,7 @@ use matrix_bot_api::{ActiveBot, MessageType};
 use matrix_bot_api::handlers::{Message, HandleResult};
 use rand::distributions::{Distribution, Uniform};
 use rand::seq::SliceRandom;
+use crate::botconf::Settings;
 
 pub fn senddab(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
 
@@ -15,10 +16,7 @@ pub fn senddab(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
         "／ʕ •ᴥ•ʔ／"
     ];
     let mut rng = rand::thread_rng();
-    let mut settings = config::Config::default();
-    settings.merge(config::File::with_name("botconfig")).unwrap();
-
-    let get = settings.get_str("dab").unwrap();
+    let get = Settings::get_settings().dab;
     let limit = get.parse().unwrap();
     let mut random = rand::thread_rng();
     let number = Uniform::from(0.00..1.00);
