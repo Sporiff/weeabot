@@ -33,6 +33,7 @@ async fn geturl(url: &str) -> Result<Output, Error>{
 
 const FRAGMENT: &AsciiSet = &CONTROLS.add(b' ').add(b'"').add(b'<').add(b'>').add(b'`');
 const APOLOGY: &str = "I'm sorry, senpai. I can't find it (╥﹏╥)";
+const BLANK: &str = "Silly senpai. I need something to search for ┐('～`;)┌";
 
 fn track(string: &String) -> Option<Output> {
     let request_url = &format!("https://tanukitunes.com/api/v1/tracks/?q={}&ordering=title", string.trim());
@@ -91,16 +92,23 @@ fn find_artist_by_name(results: &Vec<ID>, name: String) -> u32 {
 
 pub fn trackresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
     let query = _cmd.trim().to_string().to_lowercase();
-    let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string().to_lowercase();
-    let results = track(&string);
 
-    match results {
-        None => bot.send_message(&format!("{}", APOLOGY), &message.room, MessageType::TextMessage),
-        Some(result) => {
-            let final_id = find_track_by_title(&result.results, query);
-            let post_url = &format!("https://tanukitunes.com/library/tracks/{}", final_id);
-            bot.send_message(&format!("{}", post_url), &message.room, MessageType::TextMessage);
-        },
+    if query == "" {
+        bot.send_message(&format!("{}", BLANK), &message.room, MessageType::TextMessage);
+    }
+
+    else {
+        let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string().to_lowercase();
+        let results = track(&string);
+
+        match results {
+            None => bot.send_message(&format!("{}", APOLOGY), &message.room, MessageType::TextMessage),
+            Some(result) => {
+                let final_id = find_track_by_title(&result.results, query);
+                let post_url = &format!("https://tanukitunes.com/library/tracks/{}", final_id);
+                bot.send_message(&format!("{}", post_url), &message.room, MessageType::TextMessage);
+            },
+        }
     }
 
     HandleResult::StopHandling
@@ -108,16 +116,22 @@ pub fn trackresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult
 
 pub fn albresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
     let query = _cmd.trim().to_string().to_lowercase();
-    let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string().to_lowercase();
-    let results = album(&string);
 
-    match results {
-        None => bot.send_message(&format!("{}", APOLOGY), &message.room, MessageType::TextMessage),
-        Some(result) => {
-            let final_id = find_album_by_title(&result.results, query);
-            let post_url = &format!("https://tanukitunes.com/library/albums/{}", final_id);
-            bot.send_message(&format!("{}", post_url), &message.room, MessageType::TextMessage);
-        },
+    if query == "" {
+        bot.send_message(&format!("{}", BLANK), &message.room, MessageType::TextMessage);
+    }
+    else {
+        let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string().to_lowercase();
+        let results = album(&string);
+
+        match results {
+            None => bot.send_message(&format!("{}", APOLOGY), &message.room, MessageType::TextMessage),
+            Some(result) => {
+                let final_id = find_album_by_title(&result.results, query);
+                let post_url = &format!("https://tanukitunes.com/library/albums/{}", final_id);
+                bot.send_message(&format!("{}", post_url), &message.room, MessageType::TextMessage);
+            },
+        }
     }
 
     HandleResult::StopHandling
@@ -125,16 +139,22 @@ pub fn albresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
 
 pub fn artresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
     let query = _cmd.trim().to_string().to_lowercase();
-    let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string().to_lowercase();
-    let results = artist(&string);
 
-    match results {
-        None => bot.send_message(&format!("{}", APOLOGY), &message.room, MessageType::TextMessage),
-        Some(result) => {
-            let final_id = find_artist_by_name(&result.results, query);
-            let post_url = &format!("https://tanukitunes.com/library/artists/{}", final_id);
-            bot.send_message(&format!("{}", post_url), &message.room, MessageType::TextMessage);
-        },
+    if query == "" {
+        bot.send_message(&format!("{}", BLANK), &message.room, MessageType::TextMessage);
+    }
+    else {
+        let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string().to_lowercase();
+        let results = artist(&string);
+
+        match results {
+            None => bot.send_message(&format!("{}", APOLOGY), &message.room, MessageType::TextMessage),
+            Some(result) => {
+                let final_id = find_artist_by_name(&result.results, query);
+                let post_url = &format!("https://tanukitunes.com/library/artists/{}", final_id);
+                bot.send_message(&format!("{}", post_url), &message.room, MessageType::TextMessage);
+            },
+        }
     }
 
     HandleResult::StopHandling
