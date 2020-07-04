@@ -10,6 +10,7 @@ mod dab;
 mod fck;
 mod fw;
 mod botconf;
+mod choices;
 
 use matrix_bot_api::MatrixBot;
 use matrix_bot_api::handlers::StatelessHandler;
@@ -22,6 +23,7 @@ use notice::noticeme;
 use translate::translateme;
 use dab::senddab;
 use botconf::Settings;
+use choices::yes_no;
 
 fn main() {
 
@@ -111,6 +113,17 @@ fn main() {
     fw.register_handle("track", trackresp);
 
     bot.add_handler(fw);
+
+// Choices function
+
+    let mut choices = StatelessHandler::new();
+    choices.set_cmd_prefix("");
+
+    for modal in choices::MODALS {
+        choices.register_handle(modal, yes_no);
+    }
+
+    bot.add_handler(choices);
 
 // Login function
 
