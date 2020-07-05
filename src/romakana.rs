@@ -8,14 +8,12 @@ use wana_kana::to_kana::*;
 
 pub fn romaconvert(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
     let input = &_cmd.trim().to_string();
-    let result = to_romaji(input);
-    bot.send_message(&format!("{}", result), &message.room, MessageType::TextMessage);
+    bot.send_message(&format!("{}", to_romaji(input)), &message.room, MessageType::TextMessage);
     HandleResult::StopHandling
 }
 
 pub fn kanaconvert(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
     let input = &_cmd.trim().to_string();
-    let result = to_kana(input);
-    bot.send_message(&format!("{}", result), &message.room, MessageType::TextMessage);
+    bot.send_message(&format!("{}", to_kana(input)), &message.room, MessageType::TextMessage);
     HandleResult::StopHandling
 }
