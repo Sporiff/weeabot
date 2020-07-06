@@ -11,6 +11,7 @@ mod fck;
 mod fw;
 mod botconf;
 mod choices;
+mod ht;
 
 use matrix_bot_api::MatrixBot;
 use matrix_bot_api::handlers::StatelessHandler;
@@ -24,6 +25,7 @@ use translate::translateme;
 use dab::senddab;
 use botconf::Settings;
 use choices::yes_no;
+use ht::headstails;
 
 fn main() {
 
@@ -74,6 +76,15 @@ fn main() {
     head.register_handle("headpat", headpat);
 
     bot.add_handler(head);
+
+
+// Heads/Tails function
+
+    let mut ht = StatelessHandler::new();
+    ht.set_cmd_prefix("%");
+    ht.register_handle("ht", headstails);
+
+    bot.add_handler(ht);
 
 // Rip function
 
