@@ -1,6 +1,3 @@
-extern crate rand;
-extern crate config;
-
 use rand::seq::SliceRandom;
 use rand::Rng;
 use matrix_bot_api::{ActiveBot, MessageType};

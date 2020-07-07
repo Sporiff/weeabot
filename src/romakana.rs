@@ -1,6 +1,3 @@
-extern crate matrix_bot_api;
-extern crate wana_kana;
-
 use matrix_bot_api::handlers::{Message, HandleResult};
 use matrix_bot_api::{ActiveBot, MessageType};
 use wana_kana::to_romaji::*;

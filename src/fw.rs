@@ -1,8 +1,3 @@
-extern crate serde;
-extern crate reqwest;
-extern crate percent_encoding;
-extern crate tokio;
-
 use matrix_bot_api::{ActiveBot, MessageType};
 use matrix_bot_api::handlers::{Message, HandleResult};
 use percent_encoding::{utf8_percent_encode, AsciiSet, CONTROLS};

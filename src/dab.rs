@@ -1,7 +1,3 @@
-extern crate matrix_bot_api;
-extern crate rand;
-extern crate config;
-
 use rand::Rng;
 use matrix_bot_api::{ActiveBot, MessageType};
 use matrix_bot_api::handlers::{Message, HandleResult};

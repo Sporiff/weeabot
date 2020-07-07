@@ -1,7 +1,3 @@
-extern crate matrix_bot_api;
-extern crate config;
-extern crate ytr;
-
 use matrix_bot_api::{ActiveBot, MessageType};
 use matrix_bot_api::handlers::{Message, HandleResult};
 use crate::botconf::Settings;

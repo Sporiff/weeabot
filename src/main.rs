@@ -1,5 +1,11 @@
 extern crate config;
-extern crate matrix_bot_api;
+extern crate serde;
+extern crate rand;
+extern crate wana_kana;
+extern crate ytr;
+extern crate reqwest;
+extern crate percent_encoding;
+extern crate tokio;
 
 mod rip;
 mod pat;
