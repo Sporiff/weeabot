@@ -30,7 +30,7 @@ use notice::noticeme;
 use translate::translateme;
 use dab::senddab;
 use botconf::Settings;
-use choices::yes_no;
+use choices::{yes_no, choose_resp};
 use ht::headstails;
 
 fn main() {
@@ -130,6 +130,9 @@ fn main() {
     for modal in choices::MODALS {
         choices.register_handle(modal, yes_no);
     }
+
+    choices.set_cmd_prefix("%");
+    choices.register_handle("choose", choose_resp);
 
     bot.add_handler(choices);
 
