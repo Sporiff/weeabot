@@ -17,6 +17,15 @@ const RESPONSES: &'static [&str] = &[
     "yeah",
 ];
 
+const COIN: &'static [&str] = &[
+    "Heads", "Tails"
+];
+
+pub fn headstails(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
+    bot.send_message(&format!("{}", COIN.choose(&mut rand::thread_rng()).unwrap()), &message.room, MessageType::TextMessage);
+    HandleResult::StopHandling
+}
+
 pub fn yes_no(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
     bot.send_message(
         &format!("{}", RESPONSES.choose(&mut rand::thread_rng()).unwrap()),

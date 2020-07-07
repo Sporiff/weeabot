@@ -7,31 +7,19 @@ extern crate reqwest;
 extern crate percent_encoding;
 extern crate tokio;
 
-mod rip;
-mod pat;
-mod romakana;
-mod notice;
-mod translate;
-mod dab;
-mod fck;
-mod fw;
+mod funkwhale;
 mod botconf;
 mod choices;
-mod ht;
+mod simple;
+mod language;
 
 use matrix_bot_api::MatrixBot;
 use matrix_bot_api::handlers::StatelessHandler;
-use rip::ripresp;
-use fck::fckresp;
-use fw::{artresp, trackresp, albresp};
-use pat::headpat;
-use romakana::{kanaconvert, romaconvert};
-use notice::noticeme;
-use translate::translateme;
-use dab::senddab;
 use botconf::Settings;
-use choices::{yes_no, choose_resp};
-use ht::headstails;
+use simple::{senddab, ripresp, fckresp, headpat, noticeme};
+use choices::{yes_no, choose_resp, headstails};
+use language::{translateme, kanaconvert, romaconvert};
+use funkwhale::{artresp, trackresp, albresp};
 
 fn main() {
 
@@ -96,7 +84,7 @@ fn main() {
 
     let mut rip = StatelessHandler::new();
     rip.set_cmd_prefix("");
-    for modal in rip::MODALS {
+    for modal in simple::RIPMODALS {
         rip.register_handle(modal, ripresp);
     }
 
@@ -106,7 +94,7 @@ fn main() {
 
     let mut fck = StatelessHandler::new();
     fck.set_cmd_prefix("");
-    for modal in fck::MODALS {
+    for modal in simple::FCKMODALS {
         fck.register_handle(modal, fckresp);
     }
 
@@ -122,14 +110,21 @@ fn main() {
 
     bot.add_handler(fw);
 
-// Choices function
+// Yes/No function
 
-    let mut choices = StatelessHandler::new();
-    choices.set_cmd_prefix("");
+    let mut yesno = StatelessHandler::new();
+
+    yesno.set_cmd_prefix("");
 
     for modal in choices::MODALS {
-        choices.register_handle(modal, yes_no);
-    }
+        yesno.register_handle(modal, yes_no);
+    };
+
+    bot.add_handler(yesno);
+
+// Choices Function
+
+    let mut choices = StatelessHandler::new();
 
     choices.set_cmd_prefix("%");
     choices.register_handle("choose", choose_resp);
