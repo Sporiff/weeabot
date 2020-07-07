@@ -1,7 +1,7 @@
 use matrix_bot_api::{ActiveBot, MessageType};
 use matrix_bot_api::handlers::{Message, HandleResult};
-use wana_kana::to_romaji::*;
-use wana_kana::to_kana::*;
+use wana_kana::to_romaji::to_romaji;
+use wana_kana::to_kana::to_kana;
 use crate::botconf::Settings;
 
 // Convert from romaji to kana
