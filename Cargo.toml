@@ -1,6 +1,6 @@
 [package]
 name = "weeabot"
-version = "0.7.0"
+version = "0.8.0"
 authors = ["Ciarán Ainsworth <ciaranainsworth@posteo.net>"]
 edition = "2018"
 
