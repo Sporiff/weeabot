@@ -15,6 +15,7 @@ and fun reactions to various triggers set up in the
 * `%headpat` - Triggers a "Nyan nyan" message
 * `%kana <string>` - Converts given string into Japanese kana
 * `%roma <string>` - Converts given string into roman characters
+* `%choose <comma separated strings>` - Chooses a random option from a list of strings separated by commas
 * `%translate <language code> <string>` - Translates given
 string into the language given in the language code. e.g.:
 
@@ -40,4 +41,4 @@ determined in the `BotConfig.toml` file:
 * `fuck` - Responds with an angry "Fuck" message
 
 This bot makes use of the
-[`matrix_bot_api crate`](https://docs.rs/matrix_bot_api/0.4.0/matrix_bot_api/)
+[`matrix_bot_api crate`](https://docs.rs/matrix_bot_api/0.5.2/matrix_bot_api/)
