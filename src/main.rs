@@ -16,7 +16,7 @@ mod language;
 use matrix_bot_api::MatrixBot;
 use matrix_bot_api::handlers::StatelessHandler;
 use botconf::Settings;
-use simple::{senddab, ripresp, fckresp, headpat, noticeme};
+use simple::{senddab, ripresp, fckresp, headpat, noticeme, versionresp};
 use choices::{yes_no, choose_resp, headstails};
 use language::{translateme, kanaconvert, romaconvert};
 use funkwhale::{artresp, trackresp, albresp};
@@ -130,6 +130,15 @@ fn main() {
     choices.register_handle("choose", choose_resp);
 
     bot.add_handler(choices);
+
+// Version Function
+
+    let mut version = StatelessHandler::new();
+
+    version.set_cmd_prefix("%");
+    version.register_handle("version", versionresp);
+
+    bot.add_handler(version);
 
 // Login function
 

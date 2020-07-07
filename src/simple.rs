@@ -32,6 +32,8 @@ const DABFACE: &'static [&str] = &[
     "ヽ(o⌣oヾ)", "ヽ( •_)ᕗ", "／ʕ •ᴥ•ʔ／"
 ];
 
+const VERSION: &'static str = env!("CARGO_PKG_VERSION");
+
 // Dab Handler
 
 pub fn senddab(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
@@ -79,5 +81,12 @@ pub fn fckresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
     if random > limit {
         bot.send_message(&format!("ファック {}", FCKFACE.choose(&mut rand::thread_rng()).unwrap()), &message.room, MessageType::TextMessage);
     }
+    HandleResult::StopHandling
+}
+
+// Version Handler
+
+pub fn versionresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
+    bot.send_message(&format!("I'm at version {} {}", VERSION, SENPAIFACE.choose(&mut rand::thread_rng()).unwrap()), &message.room, MessageType::TextMessage);
     HandleResult::StopHandling
 }
