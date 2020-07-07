@@ -21,10 +21,14 @@ const COIN: &'static [&str] = &[
     "Heads", "Tails"
 ];
 
+// Heads/Tails Handler
+
 pub fn headstails(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
     bot.send_message(&format!("{}", COIN.choose(&mut rand::thread_rng()).unwrap()), &message.room, MessageType::TextMessage);
     HandleResult::StopHandling
 }
+
+// Yes/No Handler
 
 pub fn yes_no(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
     bot.send_message(
@@ -35,6 +39,8 @@ pub fn yes_no(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
     HandleResult::StopHandling
 }
 
+// Separate string for multiple choice
+
 fn choose_item(text: &str) -> &str {
     text.split(',')
         .filter(|&choice| choice.len() > 0)
@@ -43,6 +49,8 @@ fn choose_item(text: &str) -> &str {
         .choose(&mut rand::thread_rng())
         .unwrap()
 }
+
+// Multiple choice handler
 
 pub fn choose_resp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
     if _cmd.trim().chars().all(|c| c == ',' || c == ' ') {
@@ -64,6 +72,8 @@ pub fn choose_resp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResu
 
     HandleResult::StopHandling
 }
+
+// Multiple Choice tests
 
 #[cfg(test)]
 mod tests {

@@ -5,6 +5,8 @@ use serde::Deserialize;
 use reqwest::Error;
 use crate::botconf::Settings;
 
+// Define layout of returned results
+
 #[derive(Deserialize, Debug)]
 struct Output {
     count: u32,
@@ -20,6 +22,8 @@ struct ID {
     name: String,
 }
 
+// Fetch JSON response from server
+
 #[tokio::main]
 async fn geturl(url: &str) -> Result<Output, Error>{
     let request_url = format!("{}", url);
@@ -30,6 +34,8 @@ async fn geturl(url: &str) -> Result<Output, Error>{
 const FRAGMENT: &AsciiSet = &CONTROLS.add(b' ').add(b'"').add(b'<').add(b'>').add(b'`');
 const APOLOGY: &str = "I'm sorry, senpai. I can't find it (╥﹏╥)";
 const BLANK: &str = "Silly senpai. I need something to search for ┐('～`;)┌";
+
+// Pass query parameter to endpoint
 
 fn track(string: &String) -> Option<Output> {
     let request_url = &format!("{}/api/v1/tracks/?q={}&ordering=title", Settings::get_settings().funkwhale_url, string.trim());
@@ -64,6 +70,8 @@ fn artist(string: &String) -> Option<Output> {
     Some(result)
 }
 
+// Pattern match results
+
 fn find_track_by_title(results: &Vec<ID>, title: String) -> u32 {
     match results.iter().find(|&t| t.title.to_lowercase() == title.to_lowercase()) {
         None => results[0].id,
@@ -85,6 +93,7 @@ fn find_artist_by_name(results: &Vec<ID>, name: String) -> u32 {
     }
 }
 
+// Handle and return track search results
 
 pub fn trackresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
     let query = _cmd.trim().to_string().to_lowercase();
@@ -110,6 +119,8 @@ pub fn trackresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult
     HandleResult::StopHandling
 }
 
+// Handle and return album search results
+
 pub fn albresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
     let query = _cmd.trim().to_string().to_lowercase();
 
@@ -133,6 +144,8 @@ pub fn albresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
     HandleResult::StopHandling
 }
 
+// Handle and return artist search results
+
 pub fn artresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
     let query = _cmd.trim().to_string().to_lowercase();
 
@@ -155,6 +168,8 @@ pub fn artresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
 
     HandleResult::StopHandling
 }
+
+// Query tests
 
 #[cfg(test)]
 mod tests {
