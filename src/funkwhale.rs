@@ -103,7 +103,7 @@ pub fn trackresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult
     }
 
     else {
-        let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string().to_lowercase();
+        let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string().to_lowercase().replace(":", "&#58");
         let results = track(&string);
 
         match results {
@@ -128,7 +128,7 @@ pub fn albresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
         bot.send_message(&format!("{}", BLANK), &message.room, MessageType::TextMessage);
     }
     else {
-        let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string().to_lowercase();
+        let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string().to_lowercase().replace(":", "&#58");
         let results = album(&string);
 
         match results {
@@ -153,7 +153,7 @@ pub fn artresp(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
         bot.send_message(&format!("{}", BLANK), &message.room, MessageType::TextMessage);
     }
     else {
-        let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string().to_lowercase();
+        let string = utf8_percent_encode(_cmd.trim(), FRAGMENT).to_string().to_lowercase().replace(":", "&#58");
         let results = artist(&string);
 
         match results {
