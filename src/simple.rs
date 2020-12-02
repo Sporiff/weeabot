@@ -32,6 +32,10 @@ const DABFACE: &'static [&str] = &[
     "ヽ(o⌣oヾ)", "ヽ( •_)ᕗ", "／ʕ •ᴥ•ʔ／"
 ];
 
+const SHRUGFACE: &'static [&str] = &[
+    "┐(￣ヘ￣)┌", "乁ʕ •̀ ۝ •́ ʔㄏ", "乁( ⁰͡  Ĺ̯ ⁰͡ ) ㄏ", "┐(´∀｀)┌", "ʅ(́◡◝)ʃ", "¯\\_(ツ)_/¯"
+];
+
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 
 // Dab Handler
@@ -57,6 +61,13 @@ pub fn headpat(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
 
 pub fn noticeme(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
     bot.send_message(&format!("Notice me senpai {}", SENPAIFACE.choose(&mut rand::thread_rng()).unwrap()), &message.room, MessageType::TextMessage);
+    HandleResult::StopHandling
+}
+
+// Shrug Handler
+
+pub fn shruggie(bot: &ActiveBot, message: &Message, _cmd: &str) -> HandleResult {
+    bot.send_message(&format!("{}", SHRUGFACE.choose(&mut rand::thread_rng()).unwrap()), &message.room, MessageType::TextMessage);
     HandleResult::StopHandling
 }
 

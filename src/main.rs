@@ -16,9 +16,9 @@ mod language;
 use matrix_bot_api::MatrixBot;
 use matrix_bot_api::handlers::StatelessHandler;
 use botconf::Settings;
-use simple::{senddab, ripresp, fckresp, headpat, noticeme, versionresp};
+use simple::{senddab, ripresp, fckresp, headpat, noticeme, versionresp, shruggie};
 use choices::{yes_no, choose_resp, headstails};
-use language::{translateme, kanaconvert, romaconvert};
+use language::{kanaconvert, romaconvert};
 use funkwhale::{artresp, trackresp, albresp};
 
 fn main() {
@@ -41,11 +41,11 @@ fn main() {
 
 // Translate function
 
-    let mut tran = StatelessHandler::new();
-    tran.set_cmd_prefix("%");
-    tran.register_handle("translate", translateme);
+//    let mut tran = StatelessHandler::new();
+//    tran.set_cmd_prefix("%");
+//    tran.register_handle("translate", translateme);
 
-    bot.add_handler(tran);
+//    bot.add_handler(tran);
 
 // Kana function
 
@@ -139,6 +139,15 @@ fn main() {
     version.register_handle("version", versionresp);
 
     bot.add_handler(version);
+
+// Shrug Function
+
+    let mut shrug = StatelessHandler::new();
+
+    shrug.set_cmd_prefix("%");
+    shrug.register_handle("shrug", shruggie);
+
+    bot.add_handler(shrug);
 
 // Login function
 
